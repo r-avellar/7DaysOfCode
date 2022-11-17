@@ -16,9 +16,8 @@ public class SevenDaysOfCodeApplication {
 
 	public static void main(String[] args) throws Exception {
 		Dotenv dotenv = Dotenv.load();
-		System.out.println(dotenv.get("api.key"));
 		String url = "https://imdb-api.com/en/API/Top250Movies/" + dotenv.get("api.key");
-		System.out.println(url);
+
 
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
