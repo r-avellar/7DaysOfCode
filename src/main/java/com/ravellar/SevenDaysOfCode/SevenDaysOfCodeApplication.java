@@ -1,7 +1,9 @@
 package com.ravellar.SevenDaysOfCode;
 
+import com.ravellar.SevenDaysOfCode.entities.Movie;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -17,6 +19,7 @@ public class SevenDaysOfCodeApplication {
 	public static void main(String[] args) throws Exception {
 		Dotenv dotenv = Dotenv.load();
 		String url = "https://imdb-api.com/en/API/Top250Movies/" + dotenv.get("api.key");
+		List<Movie> movies = new ArrayList<>();
 
 
 		HttpClient client = HttpClient.newHttpClient();
@@ -27,16 +30,21 @@ public class SevenDaysOfCodeApplication {
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-		String[] movies = parseJsonMovies(response.body());
+		String[] moviesArray = parseJsonMovies(response.body());
 
-		System.out.println(response.statusCode());
-		System.out.println(response.body());
 
-		List<String> titles = parseTitle(movies);
-		titles.forEach(System.out::println);
+		List<String> title = parseTitle(moviesArray);
+		List<String> urlImg = parseUrlImg(moviesArray);
+		List<String> rating = parseRating(moviesArray);
+		List<String> year = parseYear(moviesArray);
 
-		List<String> urlImg = parseUrlImg(movies);
-		urlImg.forEach(System.out::println);
+
+		for(int i = 0; i < moviesArray.length; i++){
+			movies.add(new Movie(title.get(i), urlImg.get(i), year.get(i), rating.get(i)));
+		}
+
+		System.out.println(movies);
+
 
 
 
@@ -50,6 +58,14 @@ public class SevenDaysOfCodeApplication {
 
 	private static List<String> parseTitle(String[] movies) {
 		return parseAtributes(movies, 3);
+	}
+
+	private static List<String> parseYear(String[] movies) {
+		return parseAtributes(movies,4);
+	}
+
+	private static List<String> parseRating(String[] movies) {
+		return parseAtributes(movies, 7);
 	}
 
 	private static List<String> parseAtributes(String[] movies, int pos) {
