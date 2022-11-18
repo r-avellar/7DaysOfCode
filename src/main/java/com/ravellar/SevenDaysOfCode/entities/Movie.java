@@ -48,7 +48,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return          "title = " + title + "\n" +
+        return         "\n" + "title = " + title + "\n" +
                         "url = " + urlImage + "\n" +
                         "year = " + year + "\n" +
                         "rating = " + rating + "\n";
