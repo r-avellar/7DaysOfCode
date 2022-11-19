@@ -1,8 +1,10 @@
 package com.ravellar.SevenDaysOfCode;
 
 import com.ravellar.SevenDaysOfCode.entities.Movie;
+import com.ravellar.SevenDaysOfCode.views.HTMLGenerator;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.URI;
@@ -43,11 +45,9 @@ public class SevenDaysOfCodeApplication {
 			movies.add(new Movie(title.get(i), urlImg.get(i), year.get(i), rating.get(i)));
 		}
 
-		System.out.println(movies);
-
-
-
-
+		PrintWriter writer = new PrintWriter("index.html");
+		new HTMLGenerator(writer).generate(movies);
+		writer.close();
 
 
 	}
@@ -90,3 +90,5 @@ public class SevenDaysOfCodeApplication {
 		return movies;
 	}
 }
+
+
