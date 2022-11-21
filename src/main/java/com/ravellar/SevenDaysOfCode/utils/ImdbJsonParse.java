@@ -2,6 +2,8 @@ package com.ravellar.SevenDaysOfCode.utils;
 
 import com.ravellar.SevenDaysOfCode.entities.Movie;
 
+import com.ravellar.SevenDaysOfCode.repositories.JsonParser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -9,7 +11,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ImdbJsonParse {
+
+
+public class ImdbJsonParse implements JsonParser {
 
     private String json;
 
@@ -59,7 +63,7 @@ public class ImdbJsonParse {
                 .collect(Collectors.toList());
     }
 
-    private static String[] parseJsonMovies(String json) {
+    public static String[] parseJsonMovies(String json) {
         Matcher matcher = Pattern.compile(".*\\[(.*)\\].*").matcher(json);
 
         if (!matcher.matches()) {
@@ -72,4 +76,6 @@ public class ImdbJsonParse {
         movies[last] = lastString.substring(0, lastString.length() - 1);
         return movies;
     }
+
+
 }

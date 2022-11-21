@@ -1,6 +1,7 @@
-package com.ravellar.SevenDaysOfCode.views;
+package com.ravellar.SevenDaysOfCode.utils;
 
 import com.ravellar.SevenDaysOfCode.entities.Movie;
+import com.ravellar.SevenDaysOfCode.repositories.Content;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,7 +14,7 @@ public class HTMLGenerator{
         this.writer = writer;
     }
 
-    public void generate(List<Movie> movies){
+    public void generate(List<? extends Content> contentList){
         writer.println(
                 """
                 <html>
@@ -28,7 +29,7 @@ public class HTMLGenerator{
                 """
         );
 
-        for(Movie movie: movies){
+        for(Content content: contentList){
             String div =
                     """
                     <div class=\"card text-white bg-dark mb-3\" style=\"max-width: 18rem;\">
@@ -40,7 +41,7 @@ public class HTMLGenerator{
                     </div>
                     """;
 
-            writer.println(String.format(div, movie.getTitle(), movie.getUrlImage(), movie.getTitle(), movie.getRating(), movie.getYear()));
+            writer.println(String.format(div, content.title(), content.urlImage(), content.title(), content.rating(), content.year()));
         }
 
         writer.println(

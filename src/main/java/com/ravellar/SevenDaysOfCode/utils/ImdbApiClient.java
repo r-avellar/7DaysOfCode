@@ -1,12 +1,14 @@
 package com.ravellar.SevenDaysOfCode.utils;
 
+import com.ravellar.SevenDaysOfCode.repositories.ApiClient;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class ImdbApiClient {
+public class ImdbApiClient implements ApiClient {
 
     private String apiKey;
 

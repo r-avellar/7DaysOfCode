@@ -1,22 +1,15 @@
 package com.ravellar.SevenDaysOfCode;
 
-import com.ravellar.SevenDaysOfCode.entities.Movie;
+import com.ravellar.SevenDaysOfCode.repositories.Content;
+import com.ravellar.SevenDaysOfCode.repositories.JsonParser;
 import com.ravellar.SevenDaysOfCode.utils.ImdbApiClient;
+import com.ravellar.SevenDaysOfCode.utils.HTMLGenerator;
 import com.ravellar.SevenDaysOfCode.utils.ImdbJsonParse;
-import com.ravellar.SevenDaysOfCode.views.HTMLGenerator;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 public class SevenDaysOfCodeApplication {
 
@@ -24,16 +17,22 @@ public class SevenDaysOfCodeApplication {
 		Dotenv dotenv = Dotenv.load();
 		String apiKey = dotenv.get("api.key");
 
-		String response = new ImdbApiClient(apiKey).getBody();
+		ImdbApiClient apiClient = new ImdbApiClient(apiKey);
+		String response = apiClient.getBody();
 
-		List<Movie> movies = new ImdbJsonParse(response).parse();
+		JsonParser jsonParser = new ImdbJsonParse(response);
+		List<? extends Content> contentList = jsonParser.parse();
+
+
 
 		PrintWriter writer = new PrintWriter("index.html");
-		new HTMLGenerator(writer).generate(movies);
+		new HTMLGenerator(writer).generate(contentList);
 		writer.close();
 
 
 	}
+
+
 
 
 }
