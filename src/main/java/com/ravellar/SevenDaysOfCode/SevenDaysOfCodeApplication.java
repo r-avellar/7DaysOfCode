@@ -8,6 +8,8 @@ import com.ravellar.SevenDaysOfCode.utils.ImdbJsonParse;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ public class SevenDaysOfCodeApplication {
 		JsonParser jsonParser = new ImdbJsonParse(response);
 		List<? extends Content> contentList = jsonParser.parse();
 
+		Collections.sort(contentList, Comparator.comparing(Content::year));
 
 
 		PrintWriter writer = new PrintWriter("index.html");
